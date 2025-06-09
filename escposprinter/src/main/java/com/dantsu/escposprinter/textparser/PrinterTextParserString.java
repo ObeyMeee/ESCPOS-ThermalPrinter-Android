@@ -34,28 +34,35 @@ public class PrinterTextParserString implements IPrinterTextParserElement {
         EscPosCharsetEncoding charsetEncoding = this.printer.getEncoding();
 
         int coef = 1;
-        if(Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_DOUBLE_WIDTH) || Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG))
+        if (Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_DOUBLE_WIDTH) || Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG))
             coef = 2;
-        else if(Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_2))
+        else if (Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_2))
             coef = 3;
-        else if(Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_3))
+        else if (Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_3))
             coef = 4;
-        else if(Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_4))
+        else if (Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_4))
             coef = 5;
-        else if(Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_5))
+        else if (Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_5))
             coef = 6;
-        else if(Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_6))
+        else if (Arrays.equals(this.textSize, EscPosPrinterCommands.TEXT_SIZE_BIG_6))
             coef = 7;
 
         if (charsetEncoding != null) {
             try {
-                return this.text.getBytes(charsetEncoding.getName()).length * coef;
+                byte[] bytes = this.text.getBytes(charsetEncoding.getName());
+                if (bytes == null)
+                    return 0;
+                else
+                    return bytes.length * coef;
             } catch (UnsupportedEncodingException e) {
                 throw new EscPosEncodingException(e.getMessage());
             }
         }
 
-        return this.text.length() * coef;
+        if(this.text == null)
+            return 0;
+        else
+            return this.text.length() * coef;
     }
 
     /**
