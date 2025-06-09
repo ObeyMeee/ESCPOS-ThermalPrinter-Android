@@ -49,20 +49,13 @@ public class PrinterTextParserString implements IPrinterTextParserElement {
 
         if (charsetEncoding != null) {
             try {
-                byte[] bytes = this.text.getBytes(charsetEncoding.getName());
-                if (bytes == null)
-                    return 0;
-                else
-                    return bytes.length * coef;
+                return this.text.getBytes(charsetEncoding.getName()).length * coef;
             } catch (UnsupportedEncodingException e) {
                 throw new EscPosEncodingException(e.getMessage());
             }
         }
 
-        if(this.text == null)
-            return 0;
-        else
-            return this.text.length() * coef;
+        return this.text.length() * coef;
     }
 
     /**
