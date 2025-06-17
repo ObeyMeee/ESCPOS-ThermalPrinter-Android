@@ -5,9 +5,9 @@ import com.dantsu.escposprinter.exceptions.EscPosBarcodeException;
 import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
 import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
 import com.dantsu.escposprinter.exceptions.EscPosParserException;
+import com.dantsu.escposprinter.textparser.IPrinterTextParserElement;
 import com.dantsu.escposprinter.textparser.PrinterTextParser;
 import com.dantsu.escposprinter.textparser.PrinterTextParserColumn;
-import com.dantsu.escposprinter.textparser.IPrinterTextParserElement;
 import com.dantsu.escposprinter.textparser.PrinterTextParserLine;
 import com.dantsu.escposprinter.textparser.PrinterTextParserString;
 
@@ -107,8 +107,12 @@ public class EscPosPrinter extends EscPosPrinterSize {
      * @param dotsFeedPaper distance feed paper at the end.
      * @return Fluent interface
      */
-    public EscPosPrinter printFormattedText(String text, int dotsFeedPaper) throws EscPosConnectionException, EscPosParserException, EscPosEncodingException, EscPosBarcodeException {
-        if (this.printer == null || this.printerNbrCharactersPerLine == 0) {
+    public EscPosPrinter printFormattedText(String text, int dotsFeedPaper) throws EscPosParserException, EscPosEncodingException, EscPosBarcodeException, EscPosConnectionException {
+        if (this.printer == null) {
+            throw new EscPosConnectionException("Printer is null");
+        }
+
+        if (this.printerNbrCharactersPerLine == 0) {
             return this;
         }
 
@@ -169,7 +173,11 @@ public class EscPosPrinter extends EscPosPrinterSize {
      * @return Fluent interface
      */
     public EscPosPrinter printFormattedTextAndCut(String text, int dotsFeedPaper) throws EscPosConnectionException, EscPosParserException, EscPosEncodingException, EscPosBarcodeException {
-        if (this.printer == null || this.printerNbrCharactersPerLine == 0) {
+        if (this.printer == null) {
+            throw new EscPosConnectionException("Printer is null");
+        }
+
+        if (this.printerNbrCharactersPerLine == 0) {
             return this;
         }
 
@@ -198,7 +206,12 @@ public class EscPosPrinter extends EscPosPrinterSize {
      * @return Fluent interface
      */
     public EscPosPrinter printFormattedTextAndOpenCashBox(String text, int dotsFeedPaper) throws EscPosConnectionException, EscPosParserException, EscPosEncodingException, EscPosBarcodeException {
-        if (this.printer == null || this.printerNbrCharactersPerLine == 0) {
+        if (this.printer == null) {
+            throw new EscPosConnectionException("Printer is null");
+        }
+
+
+        if (this.printerNbrCharactersPerLine == 0) {
             return this;
         }
 
